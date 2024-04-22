@@ -28,6 +28,8 @@ def create_blog_post(title,content):
     print(response.status_code)
 
 
+
+
 title = "title"
 content = "content"
 create_blog_post(title,content)
