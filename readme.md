@@ -11,4 +11,5 @@ This project is a bot designed to automatically create and publish blog posts on
 ## Current Status
 - Completed Tasks: Filling the necessary fields in WordPress and drafting the blog post.
 - Completed Tasks: Creating blog posts using  Gemini AI.
-- Onboarding Task: Sharing the created blog in wordpress.
+- Completed Task: Sharing the created blog in wordpress.
+- Onboarding Task: Creating meta description and tags for blog post, adding them to the post.

@@ -1,10 +1,12 @@
 import requests
 import base64
 from requests.auth import HTTPBasicAuth
+from dotenv import load_dotenv, dotenv_values 
+load_dotenv() 
+import os
 
-
-user_name = "username"
-password = "password"
+user_name = os.getenv("user_name")
+password = os.getenv("password")
 wordpress_url ="https://hilalkara.com"
 
 def create_blog_post(title,content):
@@ -17,19 +19,15 @@ def create_blog_post(title,content):
         }
 
     post = {
-        "title":{title},
-        "content":{content},
+        "title":title,
+        "content":content,
         "status":"draft",
         "categories": 22
     }
   
     response = requests.post(f'{wordpress_url}/wp-json/wp/v2/posts',headers=header,json=post)
-    print(response.text)
-    print(response.status_code)
+    return response
 
 
 
 
-title = "title"
-content = "content"
-create_blog_post(title,content)
