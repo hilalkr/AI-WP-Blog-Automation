@@ -9,7 +9,7 @@ user_name = os.getenv("user_name")
 password = os.getenv("password")
 wordpress_url ="https://hilalkara.com"
 
-def create_blog_post(title,content):
+def create_blog_post(title,content, meta, hashtag_list):
     credentials = user_name + ':' + password
     cred_token = base64.b64encode(credentials.encode())
     header = {
@@ -22,7 +22,10 @@ def create_blog_post(title,content):
         "title":title,
         "content":content,
         "status":"draft",
-        "categories": 22
+        "categories": 22,
+        "meta": {
+            "description": meta
+            } 
     }
   
     response = requests.post(f'{wordpress_url}/wp-json/wp/v2/posts',headers=header,json=post)
