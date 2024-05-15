@@ -1,5 +1,5 @@
 from ai_generate import choose_blog_title,ai_blog_generate
-from wp_api import create_blog_post
+from wp_api import create_blog_post, create_tag
 import markdown
 
 
@@ -15,13 +15,17 @@ tags = meta_tags.split("**Tags:**")[1]
 
 hashtag_list = tags.split()
 
-# Listenin başındaki '#' karakterini temizle
+
 hashtag_list = [tag.strip('#') for tag in hashtag_list]
 
-# Sonucu yazdır
 print(hashtag_list)
-
+tag_ids=[]
+for tag_name in hashtag_list:
+    tag_id = create_tag(tag_name)
+    if tag_id:
+        tag_ids.append(tag_id)
+        
 html_content = markdown.markdown(blog_post)
 
 
-create_blog_post(title,html_content, meta_description, hashtag_list)
+create_blog_post(title,html_content, meta_description, tag_ids=tag_ids)
