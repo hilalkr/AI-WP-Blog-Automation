@@ -4,7 +4,12 @@ import markdown
 
 
 title = choose_blog_title()
-blog = ai_blog_generate(title=title)
+for i in range(3):
+    try:
+        blog = ai_blog_generate(title=title)
+        break
+    except:
+        print("Error ai blog post generate retrying..")
 
 print(title)
 print(blog)
@@ -29,3 +34,5 @@ html_content = markdown.markdown(blog_post)
 
 
 create_blog_post(title,html_content, meta_description, tag_ids=tag_ids)
+
+#Update prompt to create SEO-compliant blog posts

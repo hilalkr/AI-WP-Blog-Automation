@@ -31,6 +31,7 @@ def get_driver():       #The get_driver() function is defined as a context manag
     try:
         yield driver
     finally:
+        driver.close()
         driver.quit()
 
 
@@ -39,28 +40,33 @@ def get_driver():       #The get_driver() function is defined as a context manag
 
 
 def get_trend_topic():
-
-    url = "https://trends.google.com/trends/explore?cat=733&geo=TR"
+    url_home="https://trends.google.com"
+    url = "https://trends.google.com/trends/explore?cat=733&geo=US&hl=en"
     with get_driver() as driver:
-        response = driver.get(url)
-        time.sleep(4)
+        driver.get(url_home)
+        time.sleep(3)
+        driver.get(url)
+        time.sleep(3)
         driver.no_timings_detection_get(url, wait=5)
-
-       
-    
         time.sleep(10)  
+        
+        try:
 
-        page_source = driver.page_source
-
-
-        response_str = driver.find_elements(By.CLASS_NAME, 'fe-atoms-generic-content-container')[2]
-        labels_text= response_str.find_elements(By.CLASS_NAME, 'label-text')
-        title_list = []
-        for label in labels_text:
-            title_list.append(label.text)
-
-
-    return title_list
+            content_containers = driver.find_elements(By.CLASS_NAME, 'fe-atoms-generic-content-container')
+                    
+            # Ensure there is at least three elements before accessing
+            if len(content_containers) > 2:
+                    response_str = content_containers[2]
+                    labels_text = response_str.find_elements(By.CLASS_NAME, 'label-text')
+                    title_list = [label.text for label in labels_text]
+                    return title_list
+            else:
+                    print("Not enough elements found.")
+                    return []
+            
+        except Exception as e:
+                    print(f"An error occurred: {str(e)}")
+                    return []
 
 
 
